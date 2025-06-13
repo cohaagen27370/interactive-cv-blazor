@@ -1,0 +1,25 @@
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using interactiveCvBlazor.States
+@using Fluxor
+@inject IState<PageState> PageState
+
+<RadzenSidebar @bind-Expanded="@SidebarExpanded">
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem class="@(PageState.Value.Page == "" ? "selected" : "")" Text="Présentation" Icon="person" Path="/" />
+        <RadzenPanelMenuItem class="@(PageState.Value.Page == "Trainings" ? "selected" : "")" Text="Ma formation" Icon="school" Path="Trainings" />
+        <RadzenPanelMenuItem class="@(PageState.Value.Page == "Experiences" ? "selected" : "")" Text="Mes expériences" Icon="business_center" Path="Experiences" />
+        <RadzenPanelMenuItem class="@(PageState.Value.Page == "Skills" ? "selected" : "")" Text="Mes savoirs-faire" Icon="category" Path="Skills"  />
+        <RadzenPanelMenuItem class="@(PageState.Value.Page == "Being" ? "selected" : "")" Text="Mes savoirs-être" Icon="campaign" Path="Being"  />
+        <RadzenPanelMenuItem class="@(PageState.Value.Page == "Monitoring" ? "selected" : "")" Text="Veille techno & IA" Icon="memory" Path="Monitoring" />
+        <RadzenPanelMenuItem Text="Télécharger mon CV" Icon="assignment" Path="/documents/CV-LaurentBlanquet.pdf" Target="_blank" />
+    </RadzenPanelMenu>
+    <div class="rz-p-4">
+        @PageState.Value.Page
+    </div>
+</RadzenSidebar>
+
+
+@code {
+    
+    [Parameter] public bool SidebarExpanded { get; set; }
+}

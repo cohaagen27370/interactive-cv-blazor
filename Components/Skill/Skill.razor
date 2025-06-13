@@ -1,0 +1,26 @@
+﻿@using interactiveCvBlazor.Components.Certificate
+@using interactiveCvBlazor.Components.Skill
+
+<RadzenCard Variant="Variant.Filled" class="rz-mx-auto">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem">
+        <RadzenStack Gap="0">
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-display-flex rz-mt-2 rz-my-0"><b>@Model.Title</b></RadzenText>
+            <br/>
+            
+            @foreach (SkillContentModel skill in Model.Content)
+            {
+                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                    <RadzenText TextStyle="TextStyle.Overline">@skill.Name</RadzenText>
+                     <RadzenRating Stars="5" value=@(Convert.ToInt32((skill.Level / 100) * 5)) ReadOnly=true />
+                    <RadzenText TextStyle="TextStyle.Overline">@skill.Label</RadzenText>
+                </RadzenStack>
+            }
+            </RadzenStack>
+    </RadzenStack>
+</RadzenCard>
+
+@code {
+
+    [Parameter] public SkillModel Model { get; set; } = null!;
+
+}

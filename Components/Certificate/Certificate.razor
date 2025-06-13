@@ -1,0 +1,17 @@
+﻿@using interactiveCvBlazor.Components.Certificate
+<RadzenCard Variant="Variant.Filled" class="rz-my-12 rz-mx-auto">
+    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.Start" Gap="1rem" class="rz-p-4">
+        <RadzenStack Gap="0">
+            <RadzenText TextStyle="TextStyle.Body1" class="rz-display-flex rz-mt-2 rz-my-0"><b>@Model.Title</b></RadzenText>
+            <br/>
+            <RadzenText TextStyle="TextStyle.Overline">@Model.Period</RadzenText>
+            <RadzenText TextStyle="TextStyle.Body2">@Model.Spec</RadzenText>
+        </RadzenStack>
+    </RadzenStack>
+</RadzenCard>
+
+@code {
+
+    [Parameter] public CertificateModel Model { get; set; } = null!;
+
+}

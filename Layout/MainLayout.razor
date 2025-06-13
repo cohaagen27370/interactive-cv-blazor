@@ -1,0 +1,36 @@
+﻿@inherits LayoutComponentBase
+
+<HeadContent>
+    <RadzenTheme Theme="standard" />
+</HeadContent>
+
+<RadzenLayout>
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="@(() => _sidebarExpanded = !_sidebarExpanded)" />
+            <RadzenLabel Text="CV BLANQUET Laurent" />
+        </RadzenStack>
+    </RadzenHeader>
+    <Menu SidebarExpanded="_sidebarExpanded"></Menu>
+    <RadzenBody>
+        <div class="rz-p-3">
+            @Body
+        </div>
+    </RadzenBody>
+    <RadzenFooter>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.Center" Wrap="FlexWrap.Wrap">
+            <RadzenStack Orientation="Orientation.Vertical" Gap="4px">
+                <p>&nbsp; &copy; @DateTime.Now.Year Développé avec Blazor .net8 / Radzen Blazor components</p>
+                <p>
+                    <a href="https://github.com/cohaagen27370/interactive-cv-blazor">Repository github de ce site</a> |
+                    <a href="https://blazor.radzen.com/">Radzen Blazor components</a>
+                </p>                
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenFooter>
+</RadzenLayout>
+
+@code {
+    bool _sidebarExpanded = true;
+    
+}

@@ -1,0 +1,19 @@
+﻿@using interactive
+@inject TooltipService TooltipService
+
+<RadzenButton ButtonStyle="@(Odd ? ButtonStyle.Primary : ButtonStyle.Danger)" MouseEnter="@(args => ShowTooltip(args))">
+    @Model.Label
+</RadzenButton>
+
+@code {
+
+    void ShowTooltip(ElementReference elementReference) => TooltipService.Open(elementReference, "Hello!");
+    
+    [Parameter] public TagModel Model { get; set; } = new();
+
+    [Parameter] public string Label { get; set; } = string.Empty;
+    
+    [Parameter] public bool Odd { get; set; }
+
+
+}

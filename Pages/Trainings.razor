@@ -1,0 +1,38 @@
+﻿@page "/Trainings" 
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@using interactive_cv_blazor.Components.Certificate
+@using interactiveCvBlazor.Components.Certificate
+@using interactiveCvBlazor.Services
+@inject DataService DataService
+@using Fluxor
+@using interactiveCvBlazor.States
+@inject IState<PageState> PageState
+@inject IDispatcher Dispatcher
+@inject Serilog.ILogger Logger
+
+<PageTitle>Formations - Blanquet Laurent</PageTitle>
+
+<h3>Ma formation</h3>
+
+<RadzenRow Gap="1rem">
+    @foreach (CertificateModel certificate in _certificates)
+    {
+        <RadzenColumn Size="12" SizeXS="12" SizeSM="12" SizeMD="12" SizeLG="12" SizeXL="6" SizeXX="6">
+            <Certificate Model=@certificate />
+        </RadzenColumn>
+    }
+</RadzenRow>
+
+@code {
+    private List<CertificateModel> _certificates = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        this._certificates = await DataService.GetCertificatesAsync();
+        this.Dispatcher.Dispatch(new SetPageAction("Trainings"));
+        await base.OnInitializedAsync();
+    }
+
+
+    
+}
