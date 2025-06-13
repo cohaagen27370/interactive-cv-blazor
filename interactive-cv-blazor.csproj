@@ -21,8 +21,4 @@
         <PackageReference Include="Serilog.Sinks.BrowserConsole" Version="8.0.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Content Include=".github\workflows\main.yaml" />
-    </ItemGroup>
-
 </Project>
