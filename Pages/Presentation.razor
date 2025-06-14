@@ -1,20 +1,18 @@
 ﻿@page "/"
-@using System.Runtime.InteropServices.JavaScript
 @using Fluxor
 @using interactiveCvBlazor.Services
 @using interactiveCvBlazor.Services.Dtos
 @using interactiveCvBlazor.States
 @inject DataService DataService
-@inject IState<PageState> PageState
 @inject IDispatcher Dispatcher
 
 <h3>Présentation</h3>
-<h4>@_presentation.Title</h4>
 
 <PageTitle>Présentation - Blanquet Laurent</PageTitle>
 
 @if (_presentation != null)
 {
+    <h4>@_presentation.Title</h4>
     <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Start" Gap="1rem">
         <RadzenCard Variant="Variant.Filled" class="rz-mx-5">
             <RadzenRow>

@@ -10,9 +10,9 @@
             @foreach (SkillContentModel skill in Model.Content)
             {
                 <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
-                    <RadzenText TextStyle="TextStyle.Overline">@skill.Name</RadzenText>
-                     <RadzenRating Stars="5" value=@(Convert.ToInt32((skill.Level / 100) * 5)) ReadOnly=true />
-                    <RadzenText TextStyle="TextStyle.Overline">@skill.Label</RadzenText>
+                    <RadzenText Style="width: 150px" TextStyle="TextStyle.Overline">@skill.Name</RadzenText>
+                     <RadzenRating Stars="5" value=@skill.LevelBy5 ReadOnly=true  />
+                    <RadzenText Style="width: 150px" TextStyle="TextStyle.Overline">@skill.Label</RadzenText>
                 </RadzenStack>
             }
             </RadzenStack>
@@ -22,5 +22,5 @@
 @code {
 
     [Parameter] public SkillModel Model { get; set; } = null!;
-
+    
 }
