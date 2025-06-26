@@ -6,6 +6,44 @@
 
 <PageTitle>Savoirs être - Blanquet Laurent</PageTitle>
 
+<table class="table table-noborder table-compact">
+<thead>
+<tr>
+    <th>Qualités</th>
+    <th>Défauts</th>
+</tr>
+</thead>
+<tbody>
+
+@if (GlobalStateService.HowTo != null) {
+@foreach(var line in maxLength) {
+<tr>
+    <td>
+        @if (GlobalStateService.HowTo.Qualities.Count >= line + 1) {
+        <td>@GlobalStateService.HowTo.Qualities[line]</td>
+    }
+    </td>
+    <td>
+        @if (GlobalStateService.HowTo.Defaults.Count >= line + 1) {
+            <td>@GlobalStateService.HowTo.Defaults[line]</td>
+        }
+    </td>
+</tr>
+    }
+    }
+
+</tbody>
+</table>
+
+
 @code {
+    private int[] maxLength { get; set; }  
+
+ protected override void OnInitialized()
+ {
+     this.maxLength = Enumerable.Range(0, Math.Max(this.GlobalStateService.HowTo.Defaults.Count, this.GlobalStateService.HowTo.Qualities.Count)).ToArray();
+     base.OnInitialized();
+ }
+
 
 }

@@ -19,16 +19,26 @@ public class GlobalState(DataService dataService, IndexedDBManager dbManager)
     
     private List<ExperienceModel> _experiences = [];
     private List<SkillModel> _skills = [];
+    private HowToDto? _howTo { get; set; }    
     private VersionDto? _version { get; set; }
 
     private readonly DataService dataService = dataService;
+    
+    
+    private static bool _isInitialized = false;
+    
     
     public async Task Init()
     {
         _page = "";
 
+        if (_isInitialized)
+            return;
+
+        _isInitialized = true;
+
         this._version = await dataService.GetVersionAsync();
-        List<VersionDto>? localVersions = await dbManager.GetRecords<VersionDto>("version");
+        var localVersions = await dbManager.GetRecords<VersionDto>("version");
 
         if (localVersions != null && localVersions.Count != 0)
         {
@@ -46,25 +56,36 @@ public class GlobalState(DataService dataService, IndexedDBManager dbManager)
         }
         else
         {
-            await dbManager.AddRecord(new StoreRecord<VersionDto> { Data = this._version!});
+            await dbManager.AddRecord(new StoreRecord<VersionDto> { Storename = "version", Data = this._version!});
         }
 
         List<PresentationDto>? localPresentation = await dbManager.GetRecords<PresentationDto>("presentation");
-        if (localPresentation == null)
+        if (localPresentation == null || localPresentation.Count == 0)
         {
             this._presentation = await dataService.GetPresentationAsync();
-            await dbManager.AddRecord(new StoreRecord<PresentationDto> { Data = this._presentation!});
+            await dbManager.AddRecord(new StoreRecord<PresentationDto> { Storename = "presentation" , Data = this._presentation!});
         }
         else
         {
             this._presentation = localPresentation[0];       
         }
+        
+        var localHowTo = await dbManager.GetRecords<HowToDto>("howtos");
+        if (localHowTo == null || localHowTo.Count == 0)
+        {
+            this._howTo = await dataService.GetHowToAsync();
+            await dbManager.AddRecord(new StoreRecord<HowToDto> { Storename = "howtos" , Data = this._howTo!});
+        }
+        else
+        {
+            this._howTo = localHowTo[0];       
+        }        
 
         List<CertificateModel>? localCertificates = await dbManager.GetRecords<CertificateModel>("trainings");
-        if (localCertificates == null)
+        if (localCertificates == null || localCertificates.Count == 0)
         {
             this._certificates = await dataService.GetCertificatesAsync();
-            await dbManager.AddRecord(new StoreRecord<List<CertificateModel>> { Data = this._certificates});
+            await dbManager.AddRecord(new StoreRecord<List<CertificateModel>> { Storename = "trainings" ,  Data = this._certificates});
         }
         else
         {
@@ -72,10 +93,10 @@ public class GlobalState(DataService dataService, IndexedDBManager dbManager)
         }
         
         List<ExperienceModel>? localExperiences = await dbManager.GetRecords<ExperienceModel>("experiences");
-        if (localExperiences == null)
+        if (localExperiences == null  || localExperiences.Count == 0)
         {
             this._experiences = await dataService.GetExperiencesAsync();
-            await dbManager.AddRecord(new StoreRecord<List<ExperienceModel>> { Data = this._experiences});
+            await dbManager.AddRecord(new StoreRecord<List<ExperienceModel>> { Storename = "experiences" ,  Data = this._experiences});
         }
         else
         {
@@ -83,10 +104,10 @@ public class GlobalState(DataService dataService, IndexedDBManager dbManager)
         }
         
         List<SkillModel>? localSkills = await dbManager.GetRecords<SkillModel>("skills");
-        if (localSkills == null)
+        if (localSkills == null || localSkills.Count == 0)
         {
             this._skills = await dataService.GetSkillsAsync();
-            await dbManager.AddRecord(new StoreRecord<List<SkillModel>> { Data = this._skills});
+            await dbManager.AddRecord(new StoreRecord<List<SkillModel>> { Storename = "skills" ,  Data = this._skills});
         }
         else
         {
@@ -135,6 +156,17 @@ public class GlobalState(DataService dataService, IndexedDBManager dbManager)
         {
             if (_presentation == value) return;
             _presentation = value;
+            NotifyStateChanged();
+        }
+    }
+    
+    public HowToDto? HowTo
+    {
+        get => _howTo;
+        private set
+        {
+            if (_howTo == value) return;
+            _howTo = value;
             NotifyStateChanged();
         }
     }

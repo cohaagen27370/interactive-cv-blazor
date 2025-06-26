@@ -7,6 +7,7 @@ namespace interactiveCvBlazor.Services;
 
 public interface IDataService
 {
+    Task<HowToDto?> GetHowToAsync();
     Task<VersionDto?> GetVersionAsync();
     Task<List<CertificateModel>> GetCertificatesAsync();
     Task<List<ExperienceModel>> GetExperiencesAsync();
