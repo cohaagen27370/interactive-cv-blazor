@@ -1,17 +1,10 @@
 ﻿@page "/Monitoring"
-@using Fluxor
-@using interactiveCvBlazor.States
-@inject IState<PageState> PageState
-@inject IDispatcher Dispatcher
+
 
 <h3>Veille technologique et IA</h3>
 
 <PageTitle>Veille & IA - Blanquet Laurent</PageTitle>
 
 @code {
-    protected override async Task OnInitializedAsync()
-    {
-        this.Dispatcher.Dispatch(new SetPageAction("Monitoring"));
-        await base.OnInitializedAsync();
-    }
+
 }

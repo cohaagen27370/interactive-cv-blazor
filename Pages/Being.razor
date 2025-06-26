@@ -1,17 +1,11 @@
 ﻿@page "/Being"
-@using Fluxor
-@using interactiveCvBlazor.States
-@inject IState<PageState> PageState
-@inject IDispatcher Dispatcher
+@using interactiveCvBlazor.Store
+@inject GlobalState GlobalStateService
 
 <h3>Mes savoirs être</h3>
 
 <PageTitle>Savoirs être - Blanquet Laurent</PageTitle>
 
 @code {
-    protected override async Task OnInitializedAsync()
-    {
-        this.Dispatcher.Dispatch(new SetPageAction("Being"));
-        await base.OnInitializedAsync();
-    }
+
 }

@@ -1,0 +1,16 @@
+﻿@using interactiveCvBlazor.Store
+@inject GlobalState GlobalStateService
+
+@code {
+    protected override void OnInitialized()
+    {
+        // S'abonner à l'événement de changement d'état
+        GlobalStateService.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        // IMPORTANT : Se désabonner de l'événement pour éviter les fuites de mémoire
+        GlobalStateService.OnChange -= StateHasChanged;
+    }
+}

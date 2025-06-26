@@ -1,18 +1,15 @@
 ﻿@page "/"
-@using Fluxor
-@using interactiveCvBlazor.Services
-@using interactiveCvBlazor.Services.Dtos
-@using interactiveCvBlazor.States
-@inject DataService DataService
-@inject IDispatcher Dispatcher
+@inherits interactive_cv_blazor.Pages.BasePage
+@using interactiveCvBlazor.Store
+@inject GlobalState GlobalStateService
 
 <h3>Présentation</h3>
 
 <PageTitle>Présentation - Blanquet Laurent</PageTitle>
 
-@if (_presentation != null)
+@if (GlobalStateService.Presentation != null)
 {
-    <h4>@_presentation.Title</h4>
+    <h4>@GlobalStateService.Presentation.Title</h4>
     <RadzenStack Orientation="Orientation.Vertical" JustifyContent="JustifyContent.Start" Gap="1rem">
         <RadzenCard Variant="Variant.Filled" class="rz-mx-5">
             <RadzenRow>
@@ -22,7 +19,7 @@
                 <RadzenColumn Size="12" SizeMD="9">
                     <RadzenStack Gap="0">
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Moi en quelques mots</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Description.Replace("age", _age.ToString()))</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Description.Replace("age", _age.ToString()))</b></RadzenText>
                     </RadzenStack>
                 </RadzenColumn>
             </RadzenRow>
@@ -33,7 +30,7 @@
                 <RadzenColumn Size="12" SizeMD="12">
                     <RadzenStack Gap="0">
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Mon profil</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Profil.Replace("anneesExperience", _anneesExperience.ToString()))</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Profil.Replace("anneesExperience", _anneesExperience.ToString()))</b></RadzenText>
                     </RadzenStack>
                 </RadzenColumn>
             </RadzenRow>
@@ -44,12 +41,12 @@
                 <RadzenColumn Size="12" SizeMD="12">
                     <RadzenStack Gap="0">
                         <RadzenText TextStyle="TextStyle.Overline" class="rz-display-flex rz-mt-2 rz-my-0">Mes coordonnées</RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Address.Name)</b></RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Address.Street)</b></RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Address.City)</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Address.Name)</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Address.Street)</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Address.City)</b></RadzenText>
                         <br/>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Address.Telephone)</b></RadzenText>
-                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)_presentation.Address.Email)</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Address.Telephone)</b></RadzenText>
+                        <RadzenText TextStyle="TextStyle.Body1"><b>@((MarkupString)GlobalStateService.Presentation.Address.Email)</b></RadzenText>
                     </RadzenStack>
                 </RadzenColumn>
             </RadzenRow>
@@ -63,15 +60,20 @@
 
 @code {
     
-    private PresentationDto? _presentation;
+    //private PresentationDto? _presentation;
 
     private readonly int _age = DateTime.Now.Year - 1980;
     private readonly int _anneesExperience = DateTime.Now.Year - 2001;
 
     protected override async Task OnInitializedAsync()
     {
-        this._presentation = await DataService.GetPresentationAsync();
-        Dispatcher.Dispatch(new SetPageAction(""));
-    }
+        await GlobalStateService.Init();
+    } 
+    
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     this._presentation = await DataService.GetPresentationAsync();
+    //     await base.OnInitializedAsync();
+    // }
 
 }

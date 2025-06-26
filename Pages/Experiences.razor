@@ -1,19 +1,16 @@
 ﻿@page "/Experiences"
-@using Fluxor
 @using interactiveCvBlazor.Components.Experience
 @using interactiveCvBlazor.Services
-@using interactiveCvBlazor.States
 @using interactive_cv_blazor.Components.Experience
-@inject DataService DataService
-@inject IState<PageState> PageState
-@inject IDispatcher Dispatcher
+@using interactiveCvBlazor.Store
+@inject GlobalState GlobalStateService
 
 <PageTitle>Experiences - Blanquet Laurent</PageTitle>
 
 <h3>Mes expériences</h3>
 
 <RadzenRow Gap="2px" RowGap="2px">
-    @foreach (ExperienceModel experience in _experiences)
+    @foreach (ExperienceModel experience in GlobalStateService.Experiences)
     {
         <RadzenColumn Size="12" SizeXS="12" SizeSM="12" SizeMD="12" SizeLG="12" SizeXL="12" SizeXX="6">
             <Experience Model=@experience />
@@ -22,12 +19,5 @@
 </RadzenRow>
 
 @code {
-    private List<ExperienceModel> _experiences = [];
-
-    protected override async Task OnInitializedAsync()
-    {
-        this._experiences = await DataService.GetExperiencesAsync();
-        this.Dispatcher.Dispatch(new SetPageAction("Experiences"));
-        await base.OnInitializedAsync();
-    }
+    
 }

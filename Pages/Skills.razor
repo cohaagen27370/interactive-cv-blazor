@@ -1,20 +1,15 @@
 ﻿@page "/Skills"
-@using Fluxor
-@using interactiveCvBlazor.Components.Certificate
 @using interactiveCvBlazor.Components.Skill
-@using interactiveCvBlazor.Services
-@using interactiveCvBlazor.States
 @using interactive_cv_blazor.Components.Skill
-@inject DataService DataService
-@inject IState<PageState> PageState
-@inject IDispatcher Dispatcher
+@using interactiveCvBlazor.Store
+@inject GlobalState GlobalStateService
 
 <h3>Mes savoirs faire</h3>
 
 <PageTitle>Savoirs faire - Blanquet Laurent</PageTitle>
 
 <RadzenRow Gap="1rem">
-    @foreach (SkillModel skill in _skills)
+    @foreach (SkillModel skill in GlobalStateService.Skills)
     {
         <RadzenColumn Size="12" SizeXS="12" SizeSM="12" SizeMD="12" SizeLG="6" SizeXL="4" SizeXX="4">
             <Skill Model=@skill />
@@ -24,13 +19,5 @@
 
 @code {
     
-    private List<SkillModel> _skills = [];
-
-    protected override async Task OnInitializedAsync()
-    {
-        this._skills = await DataService.GetSkillsAsync();
-        this.Dispatcher.Dispatch(new SetPageAction("Skills"));
-        await base.OnInitializedAsync();
-    }
 
 }
